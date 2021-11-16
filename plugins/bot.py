@@ -33,7 +33,7 @@ class bot(Client):
         await super().stop()
         print("bot stopped. Bye.")
 
-    async def recognize(self, path):
+    async def recognize(self):
         return await shazam.recognize_song(path)
 
     async def related(self, track_id):
@@ -52,7 +52,7 @@ class bot(Client):
         except KeyError:
             return None
         
-    async def get_artist_tracks(self, artist_id: int):
+    async def get_artist_tracks(self, artist_id):
         tracks = []
         tem = (await shazam.artist_top_tracks(artist_id=artist_id, limit=50))['tracks']
         try:
