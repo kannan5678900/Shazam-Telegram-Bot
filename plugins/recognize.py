@@ -5,14 +5,15 @@ from pyrogram import filters, types, Client
 import os
 
 @Client.on_message(filters.audio | filters.video | filters.voice)
-async def voice_handler(_, message):
+async def voice_handler(client, message):
+    msg = await message.reply_text("🧐")
     file_size = message.audio or message.video or message.voice
     if max_file < file_size.file_size :
         await message.reply_text(
             "**⚠️ Max file size has been reached.**"
         )
         return
-    file = await message.download(f'{bot.rnd_id()}.mp3')
+    file = await message.download(f'{client.rnd_id()}.mp3')
     r = (await bot.recognize(file)).get('track', None)
     os.remove(file)
     if r is None:
