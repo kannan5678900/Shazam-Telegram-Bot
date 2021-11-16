@@ -1,8 +1,8 @@
-from bot import bot
-from pyrogram import filters
+from plugins.bot import bot
+from pyrogram import filters, Client
 
 
-@bot.on_message(
+@Client.on_message(
     filters.command("start")
 )
 async def alive(_, message):
