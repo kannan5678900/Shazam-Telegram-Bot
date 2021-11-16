@@ -1,11 +1,10 @@
-from bot import bot, max_file
+from plugins.bot import bot
+max_file = 30641629
 
-
-from pyrogram import filters, types
+from pyrogram import filters, types, Client
 import os
 
-
-@bot.on_message(filters.audio | filters.video | filters.voice)
+@Client.on_message(filters.audio | filters.video | filters.voice)
 async def voice_handler(_, message):
     file_size = message.audio or message.video or message.voice
     if max_file < file_size.file_size :
