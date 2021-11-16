@@ -1,8 +1,8 @@
-from pyrogram import types, filters
+from pyrogram import types, filters, Client
 from bot import bot
 
 
-@bot.on_inline_query()
+@Client.on_inline_query()
 async def inline_func(client, query):
     string = query.query.lower()
     answers = []
