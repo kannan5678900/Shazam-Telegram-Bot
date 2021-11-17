@@ -1,7 +1,7 @@
 from os import path
 from configparser import ConfigParser
 from pyrogram import Client
-from shazamio import Shazam, exceptions, FactoryArtist, FactoryTrack
+from shazamio import Shazam, exceptions, FactoryArtist, FactoryTrack, serialize_track
 
 shazam = Shazam()
 
@@ -52,12 +52,11 @@ class bot(Client):
         except KeyError:
             return None
         
-    async def get_artist_tracks(self, artist_id):
+    async def get_artist_tracks(self, artist_id: int):
         tracks = []
-        tem = (await shazam.artist_top_tracks(artist_id=artist_id, limit=50))['tracks']
+        artist_id = []
+        tem = await shazam.artist_top_tracks(artist_id=artist_id, limit=50)['tracks']
         try:
             for track in tem:
-                tracks.append(FactoryTrack(data=track).serializer())
-            return tracks
-        except KeyError:
-            return None
+                serialized_track = serialize_track(data=track)
+                print(serialized_track)
