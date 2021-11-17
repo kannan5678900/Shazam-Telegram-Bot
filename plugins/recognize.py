@@ -1,4 +1,8 @@
 from plugins.bot import bot
+from shazamio import Shazam, exceptions, FactoryArtist, FactoryTrack
+
+shazam = Shazam()
+
 max_file = 30641629
 
 from pyrogram import filters, types, Client
@@ -14,7 +18,7 @@ async def voice_handler(client, message):
         )
         return
     file = await message.download(f'{client.rnd_id()}.mp3')
-    r = (await bot.recognize(file)).get('track', None)
+    r = (await shazam.recognize_song(file)).get('track', None)
     os.remove(file)
     if r is None:
         await message.reply_text(
